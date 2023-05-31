@@ -5,19 +5,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private Rigidbody2D playerRb;
-    [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
     private float jumpPower = 5f;
 
+    private Rigidbody2D playerRb;
+    private Animator playerAnim;
+
     private bool facingRight = true;
     private bool isJumping = false;
+    private bool isRolling = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerRb = GetComponent<Rigidbody2D>();
+        playerAnim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,20 +30,33 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+
+        if (Input.GetKeyDown(KeyCode.C) && !isRolling)
+        {
+            Roll();
+        }
     }
 
     private void FixedUpdate()
     {
-        float move = Input.GetAxisRaw("Horizontal");
-        playerRb.velocity = new Vector2(move * moveSpeed, playerRb.velocity.y);
+        if (!isRolling)
+        {
+            float move = Input.GetAxisRaw("Horizontal");
+            playerRb.velocity = new Vector2(move * moveSpeed, playerRb.velocity.y);
 
-        if (move > 0 && !facingRight)
-        {
-            Flip();
-        }
-        else if(move < 0 && facingRight)
-        {
-            Flip();
+            if (move == 0f)
+                playerAnim.SetBool("Running", false);
+            else
+                playerAnim.SetBool("Running", true);
+
+            if (move > 0 && !facingRight)
+            {
+                Flip();
+            }
+            else if (move < 0 && facingRight)
+            {
+                Flip();
+            }
         }
     }
 
@@ -55,6 +71,18 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         playerRb.AddForce(Vector2.up*jumpPower, ForceMode2D.Impulse);
+    }
+    private void Roll()
+    {
+        isRolling = true;
+        if (facingRight)
+        {
+            playerRb.velocity = new Vector2(moveSpeed, playerRb.velocity.y);
+        }
+        else
+        {
+            playerRb.velocity = new Vector2(-moveSpeed, playerRb.velocity.y);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
