@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Shoot();
+        }
+
         if (Input.GetKeyDown(KeyCode.X) && !isJumping)
         {
             Jump();
@@ -67,7 +72,16 @@ public class PlayerController : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
-
+    private void Shoot()
+    {
+        GameObject bullet = ObjectPooling.GetObject();
+        float dir = 1f;
+        if (!facingRight)
+            dir *= -1f;
+        Vector3 spawnPos = new Vector3(transform.position.x + dir * 0.7f, transform.position.y + 1.29f, transform.position.z);
+        bullet.transform.position = spawnPos;
+        bullet.GetComponent<BulletController>().Shoot(dir);
+    }
     private void Jump()
     {
         playerRb.AddForce(Vector2.up*jumpPower, ForceMode2D.Impulse);
