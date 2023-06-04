@@ -11,6 +11,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     Vector3 defaultScale;
 
     public GameObject tutorialScreen; // 튜토리얼 화면을 나타내는 UI 요소
+    public GameObject startStory;
     public float fadeInDuration = 0.5f; // 페이드 인에 걸리는 시간
 
     private CanvasGroup tutorialCanvasGroup; // 튜토리얼 화면의 캔버스 그룹
@@ -19,6 +20,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         defaultScale = buttonScale.localScale;
         tutorialScreen.SetActive(false);
+        startStory.SetActive(false);
         tutorialCanvasGroup = tutorialScreen.GetComponent<CanvasGroup>();
         tutorialCanvasGroup.alpha = 0f; // 초기에 알파 값을 0으로 설정하여 숨김
     }
@@ -29,6 +31,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             case BTNType.Start:
                 Debug.Log("게임 시작");
+                StartCoroutine(FadeInBlackScreen());
                 break;
             case BTNType.Tutorial:
                 Debug.Log("게임 방법");
@@ -53,6 +56,20 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         tutorialCanvasGroup.alpha = 1f; // Ensure alpha value is set to 1
+    }
+
+    private IEnumerator FadeInBlackScreen()
+    {
+        tutorialScreen.SetActive(false);
+        startStory.SetActive(true);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeInDuration)
+        {
+            float alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeInDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
