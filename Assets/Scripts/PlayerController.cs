@@ -8,10 +8,13 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 5f;
     [SerializeField]
     private float jumpPower = 5f;
+    [SerializeField]
+    private float shootCd = 0.5f;
 
     private Rigidbody2D playerRb;
     private Animator playerAnim;
 
+    private float shootCurCd = 0f;
     private bool facingRight = true;
     private bool isJumping = false;
     private bool isRolling = false;
@@ -26,15 +29,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && !isRolling)
-        {
-            Shoot();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X) && !isJumping && !isRolling)
-        {
-            Jump();
-        }
+        Shoot();
+        Jump();
 
         if (Input.GetKeyDown(KeyCode.C) && !isRolling && !isJumping)
         {
@@ -74,17 +70,30 @@ public class PlayerController : MonoBehaviour
     }
     private void Shoot()
     {
-        GameObject bullet = ObjectPooling.GetObject();
-        float dir = 1f;
-        if (!facingRight)
-            dir *= -1f;
-        Vector3 spawnPos = new Vector3(transform.position.x + dir * 0.7f, transform.position.y + 1.29f, transform.position.z);
-        bullet.transform.position = spawnPos;
-        bullet.GetComponent<BulletController>().Shoot(dir);
+        if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
+        {
+            shootCurCd = shootCd;
+            GameObject bullet = ObjectPooling.GetObject();
+            float dir = 1f;
+            if (!facingRight)
+                dir *= -1f;
+            Vector3 spawnPos = new Vector3(transform.position.x + dir * 0.7f, transform.position.y + 1.29f, transform.position.z);
+            bullet.transform.position = spawnPos;
+            bullet.GetComponent<BulletController>().SetOwner(gameObject);
+            bullet.GetComponent<BulletController>().Shoot(dir);
+        }
+        else if (shootCurCd > 0f)
+        {
+            shootCurCd -= Time.deltaTime;
+        }
     }
     private void Jump()
     {
-        playerRb.AddForce(Vector2.up*jumpPower, ForceMode2D.Impulse);
+
+        if (Input.GetKeyDown(KeyCode.X) && !isJumping && !isRolling)
+        {
+            playerRb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        }
     }
     private IEnumerator Roll()
     {
@@ -103,12 +112,10 @@ public class PlayerController : MonoBehaviour
         isRolling = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
             isJumping = false;
-        else if (collision.gameObject.tag == "Bullet")
-            GameManager.Instance.PlayerDamaged(1);
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -116,5 +123,4 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
             isJumping = true;
     }
-
 }

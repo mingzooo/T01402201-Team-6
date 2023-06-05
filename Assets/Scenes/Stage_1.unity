@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 1858689148}
   - component: {fileID: 1858689147}
   m_Layer: 0
-  m_Name: GameManger
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,8 +592,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7256436941940376472, guid: 099247144e829a146a2a0eef14f953f9, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7256436941940376547, guid: 099247144e829a146a2a0eef14f953f9, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7256436941940376547, guid: 099247144e829a146a2a0eef14f953f9, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7256436941940376551, guid: 099247144e829a146a2a0eef14f953f9, type: 3}
