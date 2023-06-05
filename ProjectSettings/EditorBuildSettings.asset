@@ -8,4 +8,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 84592d1b75b1643a28524b879fb825a8
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: b45a21ed8161c472eb2ed4d86953bf4a
+  - enabled: 1
+    path: Assets/Scenes/Enemy_test.unity
+    guid: c4ad0d2717f3b6249b072d51dc025cbc
+  - enabled: 1
+    path: Assets/Scenes/Stage_1.unity
+    guid: d64e6a3ca26f97a48b73487b5454d5a7
+  - enabled: 1
+    path: Assets/Scenes/StartStory.unity
+    guid: 7b8a5d38bd1424bc98b0bb035a45bc83
   m_configObjects: {}
