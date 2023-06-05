@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     [SerializeField]
-    private float bulletSpeed = 2f;
+    private float bulletSpeed = 1f;
     private Vector3 direction;
 
     public void Shoot(float dir)
