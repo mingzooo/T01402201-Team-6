@@ -7,6 +7,18 @@ public class BulletController : MonoBehaviour
     [SerializeField]
     private float bulletSpeed = 1f;
     private Vector3 direction;
+    private GameObject owner;
+    private int damage = 1;
+
+    public void SetOwner(GameObject gameobject)
+    {
+        owner = gameobject;
+    }
+
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
+    }
 
     public void Shoot(float dir)
     {
@@ -20,5 +32,25 @@ public class BulletController : MonoBehaviour
     void FixedUpdate()
     {
         transform.Translate(direction);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Damage(owner, collision.gameObject, damage);
+    }
+    private void Damage(GameObject attacker, GameObject target, int damage)
+    {
+        if (attacker.tag == "Enemy")
+        {
+            if (target.tag == "Player")
+            {
+                GameManager.Instance.SetPlayerHp(damage);
+                DestroyBullet();
+            }
+        }
+        else if (attacker.tag == "Player")
+        {
+            //EnemyÀÇ Ã¼·Â --
+        }
     }
 }

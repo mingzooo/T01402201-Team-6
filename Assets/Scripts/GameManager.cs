@@ -19,13 +19,14 @@ public class GameManager : MonoBehaviour
         } 
     }
 
-    public int playerHp;
+    private int playerHp;
 
     private void Awake()
     {
-        if (_instance = null) _instance = this;
+        if (_instance == null) _instance = this;
         else if (_instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+        Init();
     }
 
     public void Init()
@@ -33,9 +34,8 @@ public class GameManager : MonoBehaviour
         playerHp = 5;
     }
 
-    public void PlayerDamaged(int damage)
+    public void SetPlayerHp(int amount)
     {
-        playerHp -= damage;
+        playerHp -= amount;
     }
-
 }
