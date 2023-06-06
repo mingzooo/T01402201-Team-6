@@ -203,6 +203,7 @@ MonoBehaviour:
   dialogStrings:
   - "\uBCF5\uC218\uB97C \uC131\uACF5\uD558\uACE0 \uC0C8\uB85C\uC6B4 \uCE5C\uAD6C\uB97C
     \uB370\uB9AC\uACE0 \uB2E4\uC2DC \uB5A0\uB09C\uB2E4.."
+  - Let's go Home
   - The End
   textObj: {fileID: 1745250573}
 --- !u!1 &1016758395
