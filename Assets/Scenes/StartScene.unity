@@ -825,7 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498229aa42fa54895a70bde7e245cd7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonScale: {fileID: 0}
+  buttonScale: {fileID: 460404334}
   tutorialScreen: {fileID: 739591864}
   startStory: {fileID: 319726977}
   fadeInDuration: 0.5
