@@ -152,7 +152,7 @@ public class EnemyController : MonoBehaviour
         float dir = 1f;
         if (!facingRight)
             dir *= -1f;
-        Vector2 spawnPos = new Vector2(transform.position.x + dir, transform.position.y);
+        Vector2 spawnPos = new Vector2(transform.position.x + dir, transform.position.y+1.5f);
         bullet.transform.position = spawnPos;
         bullet.GetComponent<BulletController>().Shoot(dir);
     }
