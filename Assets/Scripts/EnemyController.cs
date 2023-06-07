@@ -1,9 +1,12 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField]
+    private int enemyHealth = 3;
+
     [SerializeField]
     private float moveSpeed = 1f;
     [SerializeField]
@@ -176,10 +179,14 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Bullet")
+        if(enemyHealth <= 0)
         {
             Destroy(gameObject);
-            Destroy(collision.gameObject);
         }
+        // if (collision.gameObject.tag == "Bullet")
+        // {
+        //     Destroy(gameObject);
+        //     Destroy(collision.gameObject);
+        // }
     }
 }
