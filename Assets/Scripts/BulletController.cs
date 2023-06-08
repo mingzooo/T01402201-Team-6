@@ -50,7 +50,11 @@ public class BulletController : MonoBehaviour
         }
         else if (attacker.tag == "Player")
         {
-            //EnemyÀÇ Ã¼·Â --
+            if (target.tag == "Enemy")
+            {
+                //target.GetComponent<EnemyController>().enemyHealth -= damage;
+                DestroyBullet();
+            }
         }
     }
 }
