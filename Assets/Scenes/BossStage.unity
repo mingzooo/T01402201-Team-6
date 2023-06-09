@@ -342,6 +342,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8131256346358903319, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
+      propertyPath: BossHpBar
+      value: 
+      objectReference: {fileID: 1543615824}
+    - target: {fileID: 8131256346358903319, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
       propertyPath: jumpPower
       value: 7
       objectReference: {fileID: 0}

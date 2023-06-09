@@ -62,9 +62,26 @@ public class BossController : MonoBehaviour
     void Update()
     {
         Shoot();
-<<<<<<< HEAD
-        // Jump();
-        // Roll();
+        if (!isRolling)
+        {
+            Move();
+        }
+
+        Jump();
+
+        if (!isRolling && !isJumping)
+        {
+            if (rollCurCd <= 0f)
+            {
+                rollCurCd = rollCd;
+                StartCoroutine(Roll());
+            }
+            else if (rollCurCd > 0f)
+            {
+                rollCurCd -= Time.deltaTime;
+            }
+        }
+
         Debug.Log(curHp);
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -82,28 +99,6 @@ public class BossController : MonoBehaviour
     void HandleHp()
     {
         BossHpBar.value = Mathf.Lerp(BossHpBar.value, curHp, Time.deltaTime * 10);
-=======
-        
-        if(!isRolling)
-        {
-            Move();
-        }
-        
-        Jump();
-
-        if (!isRolling && !isJumping)
-        {
-            if(rollCurCd <= 0f)
-            {
-                rollCurCd = rollCd;
-                StartCoroutine(Roll());
-            }
-            else if (rollCurCd > 0f)
-            {
-                rollCurCd -= Time.deltaTime;
-            }
-        }
->>>>>>> 8d723385921bd66bc13b8a3882bcd96bb9c4ebc3
     }
 
     void FixedUpdate()
