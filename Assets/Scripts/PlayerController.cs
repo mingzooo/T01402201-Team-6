@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+  // AudioSource 컴포넌트를 저장할 변수
+  private AudioSource audioSource;
+
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
@@ -22,6 +25,8 @@ public class PlayerController : MonoBehaviour
   private void Awake()
   {
     playerRb = GetComponent<Rigidbody2D>();
+    // AudioSource 컴포넌트 추출, 변수 할당
+    audioSource = GetComponent<AudioSource>();
   }
 
   // Start is called before the first frame update
@@ -78,6 +83,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
         {
             shootCurCd = shootCd;
+
+            // Play gun sound
+            audioSource.Play();
+           
             GameObject bullet = ObjectPooling.GetObject();
             float dir = 1f;
             if (!facingRight)
