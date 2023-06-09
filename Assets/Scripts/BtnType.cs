@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public BTNType currentType;
     public Transform buttonScale;
     Vector3 defaultScale;
 
@@ -25,19 +26,16 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         tutorialCanvasGroup.alpha = 0f; // 초기에 알파 값을 0으로 설정하여 숨김
     }
 
-    public void onBtnClick()
+    public void onStartBtnClick()
     {
-        switch (currentType)
-        {
-            case BTNType.Start:
-                Debug.Log("게임 시작");
-                StartCoroutine(FadeInBlackScreen());
-                break;
-            case BTNType.Tutorial:
-                Debug.Log("게임 방법");
-                StartCoroutine(FadeInTutorialScreen());
-                break;
-        }
+        Debug.Log("게임 시작");
+        StartCoroutine(FadeInBlackScreen());
+    }
+
+    public void onTutorialBtnClick()
+    {
+        Debug.Log("게임 방법");
+        StartCoroutine(FadeInTutorialScreen());
     }
 
     private IEnumerator FadeInTutorialScreen()
@@ -70,6 +68,8 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        Debug.Log("아");
+        SceneManager.LoadScene("StartStory");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
