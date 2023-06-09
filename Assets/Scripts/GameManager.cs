@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
   private int currentStageIndex = 0;
   // 현재 스테이지에서 남은 적의 수
   private int remainingEnemies;
+
+    //목숨 갯수
+    public Image[] life;
 
 
   private void Awake()
@@ -107,5 +110,17 @@ public class GameManager : MonoBehaviour
     public void SetPlayerHp(int amount)
     {
         playerHp -= amount;
+    }
+
+    public void UpdateLifeIcon(int playerHp)
+    {
+        for (int index = 0; index<3; index++)
+        {
+            life[index].color = new Color(1, 1, 1, 0);
+        }
+        for (int index = 0; index < playerHp; index++)
+        {
+            life[index].color = new Color(1, 1, 1, 1);
+        }
     }
 }
