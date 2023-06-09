@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     }
   }
 
-  public int playerHp;
+  private int playerHp;
 
   // 스테이지 씬 이름 배열    
   public string[] sceneNames;
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     if (_instance = null) _instance = this;
     else if (_instance != this) Destroy(gameObject);
     DontDestroyOnLoad(gameObject);
+    Init();
   }
 
   public void Init()
@@ -103,4 +104,8 @@ public class GameManager : MonoBehaviour
     }
   }
 
+    public void SetPlayerHp(int amount)
+    {
+        playerHp -= amount;
+    }
 }
