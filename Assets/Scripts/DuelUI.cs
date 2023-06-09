@@ -21,7 +21,7 @@ public class DuelUI : MonoBehaviour
     {
         if (sli.value > 0.0f)
         {
-            // ½Ã°£ÀÌ º¯°æÇÑ ¸¸Å­ slider Value º¯°æÀ» ÇÕ´Ï´Ù.
+            // ì‹œê°„ì´ ë³€ê²½í•œ ë§Œí¼ slider Value ë³€ê²½ì„ í•©ë‹ˆë‹¤.
             sli.value = duel.curTime;
         }
         else
