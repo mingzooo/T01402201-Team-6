@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
   private void Awake()
   {
-    playerRb = GetComponent<Rigidbody2D>();
+    
   }
 
   // Start is called before the first frame update

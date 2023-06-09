@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8131256346358903319}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,12 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -382670524, guid: 1c2462f2379fe9f48aa2c55a55795d89, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b9abfd118fb92314480b0ce8605a6917, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -123,8 +123,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.8125}
-  m_Size: {x: 1.25, y: 1.625}
+  m_Offset: {x: 0, y: 1}
+  m_Size: {x: 1, y: 1.7}
   m_Direction: 0
 --- !u!95 &3412570126068588877
 Animator:
@@ -161,6 +161,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duelCount: 5
   duelTime: 1
+  curTime: 5
+  startDuel: 0
+  isDuel: 0
+  keyText: {fileID: 0}
 --- !u!114 &8131256346358903319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,3 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d74e6ed2048704282219e111030e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
+  jumpPower: 5
+  shootCd: 1
+  playerTransform: {fileID: 0}
