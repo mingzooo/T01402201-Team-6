@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField]
-    private int enemyHealth = 3;
+    public int enemyHealth = 3;
 
     [SerializeField]
     private float moveSpeed = 1f;
@@ -154,6 +154,7 @@ public class EnemyController : MonoBehaviour
             dir *= -1f;
         Vector2 spawnPos = new Vector2(transform.position.x + dir, transform.position.y+1.5f);
         bullet.transform.position = spawnPos;
+        bullet.GetComponent<BulletController>().SetOwner(gameObject);
         bullet.GetComponent<BulletController>().Shoot(dir);
     }
 
@@ -183,10 +184,5 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        // if (collision.gameObject.tag == "Bullet")
-        // {
-        //     Destroy(gameObject);
-        //     Destroy(collision.gameObject);
-        // }
     }
 }

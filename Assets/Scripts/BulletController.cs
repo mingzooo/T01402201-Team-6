@@ -52,7 +52,7 @@ public class BulletController : MonoBehaviour
         {
             if (target.tag == "Enemy")
             {
-                //target.GetComponent<EnemyController>().enemyHealth -= damage;
+                target.GetComponent<EnemyController>().enemyHealth -= damage;
                 DestroyBullet();
             }
         }
