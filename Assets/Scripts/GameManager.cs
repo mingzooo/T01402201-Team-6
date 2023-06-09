@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
       return _instance;
     }
   }
-
+[SerializeField]
   private int playerHp;
 
   // 스테이지 씬 이름 배열    
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
   private void Awake()
   {
-    if (_instance = null) _instance = this;
+    if (_instance == null) _instance = this;
     else if (_instance != this) Destroy(gameObject);
     DontDestroyOnLoad(gameObject);
     Init();
