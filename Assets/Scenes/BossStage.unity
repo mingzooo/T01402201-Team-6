@@ -338,6 +338,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: ba3ab73ef54236241aa54f341a914024, type: 2}
     - target: {fileID: 8131256346358903319, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
+      propertyPath: jumpCd
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8131256346358903319, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
+      propertyPath: jumpPower
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8131256346358903319, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
       propertyPath: moveSpeed
       value: 1
       objectReference: {fileID: 0}
@@ -1268,6 +1276,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1453784719516044637, guid: 099247144e829a146a2a0eef14f953f9, type: 3}
+      propertyPath: jumpPower
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7256436941940376472, guid: 099247144e829a146a2a0eef14f953f9, type: 3}
       propertyPath: moveSpeed
       value: 5
