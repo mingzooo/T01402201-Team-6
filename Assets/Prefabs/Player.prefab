@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1453784719516044637}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -382670524, guid: 1c2462f2379fe9f48aa2c55a55795d89, type: 3}
+  m_Sprite: {fileID: 21300000, guid: baaa355750c05b64c84a9614d3b77ef2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,7 +103,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -122,8 +122,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.8125}
-  m_Size: {x: 1.25, y: 1.625}
+  m_Offset: {x: 0, y: 1}
+  m_Size: {x: 1, y: 1.75}
   m_Direction: 0
 --- !u!95 &7256436941940376473
 Animator:
@@ -159,5 +159,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpPower: 5
+  jumpPower: 10
   shootCd: 0.5
