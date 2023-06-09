@@ -50,7 +50,7 @@ public class BulletController : MonoBehaviour
         }
         else if (attacker.tag == "Player")
         {
-            //EnemyÀÇ Ã¼·Â --
+            //Enemyï¿½ï¿½ Ã¼ï¿½ï¿½ --
         }
     }
 }
