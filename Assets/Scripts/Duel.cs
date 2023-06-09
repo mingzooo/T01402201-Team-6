@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Duel : MonoBehaviour
 {
     [SerializeField]
     private int duelCount = 5;
-
+    
     public float duelTime = 5f;
     public float curTime = 5f;
 
@@ -14,6 +15,12 @@ public class Duel : MonoBehaviour
     public bool isDuel = false;
 
     KeyCode code = KeyCode.Z;
+    public TextMeshProUGUI keyText;
+
+    void Start()
+    {
+        keyText = GameObject.Find("BossKeyText").GetComponent<TextMeshProUGUI>();
+    }
 
     private void Update()
     {
@@ -54,28 +61,31 @@ public class Duel : MonoBehaviour
                 int isSuccess = CheckCode(code);
                 if(isSuccess == 1)
                 {
-                    //¼º°ø
+                    //ï¿½ï¿½ï¿½ï¿½
                     isDuel = false;
                     duelCount--;
                 }
                 else if(isSuccess == -1)
                 {
-                    // °ÔÀÓ¿À¹ö
+                    // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½
                     Debug.Log("fail");
                     startDuel = false;
+                    keyText.text = "FAIL";
                 }
             }
             else if(duelCount <= 0)
             {
-                //Åë°ú
+                //ï¿½ï¿½ï¿½
                 Debug.Log("success");
                 startDuel = false;
+                keyText.text = "SUCCESS!";
             }
             else
             {
-                // °ÔÀÓ¿À¹ö
+                // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½
                 Debug.Log("time fail");
                 startDuel = false;
+                keyText.text = "FAIL";
             }
         }
     }
@@ -92,8 +102,9 @@ public class Duel : MonoBehaviour
 
     private int CheckCode(KeyCode code)
     {
-        //UI·Î ÀÔ·ÂÇØ¾ßÇÏ´Â ÄÚµå¿Í ½Ã°£ º¸¿©ÁÜ
+        //UIï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ø¾ï¿½ï¿½Ï´ï¿½ ï¿½Úµï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Debug.Log(code);
+        keyText.text = "PRESS " + code.ToString();
         if(Input.anyKeyDown)
         {
             if(Input.GetKeyDown(code))
