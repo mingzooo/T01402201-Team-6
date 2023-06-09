@@ -11,18 +11,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float shootCd = 0.5f;
 
-  private Rigidbody2D playerRb; // 플레이어의 리지드바디
-  private Animator playerAnim;
+    private Rigidbody2D playerRb; // 플레이어의 리지드바디
+    private Animator playerAnim;
+    private AudioSource audiosource;
 
     private float shootCurCd = 0f;
     private bool facingRight = true;
     private bool isJumping = false;
     private bool isRolling = false;
 
-  private void Awake()
-  {
-    playerRb = GetComponent<Rigidbody2D>();
-  }
+    private void Awake()
+    {
+        playerRb = GetComponent<Rigidbody2D>();
+        audiosource = GetComponent<AudioSource>();
+    }
 
   // Start is called before the first frame update
   void Start()
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
         {
             shootCurCd = shootCd;
+            audiosource.Play();
             GameObject bullet = ObjectPooling.GetObject();
             float dir = 1f;
             if (!facingRight)

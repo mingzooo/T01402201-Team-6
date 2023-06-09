@@ -40,7 +40,7 @@ public class BulletController : MonoBehaviour
     }
     private void Damage(GameObject attacker, GameObject target, int damage)
     {
-        if (attacker.tag == "Enemy")
+        if (attacker.tag == "Enemy" || attacker.tag == "Boss")
         {
             if (target.tag == "Player")
             {
@@ -53,6 +53,11 @@ public class BulletController : MonoBehaviour
             if (target.tag == "Enemy")
             {
                 target.GetComponent<EnemyController>().enemyHealth -= damage;
+                DestroyBullet();
+            }
+            if (target.tag == "Boss")
+            {
+                target.GetComponent<BossController>().bossHealth -= damage;
                 DestroyBullet();
             }
         }

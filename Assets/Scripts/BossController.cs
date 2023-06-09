@@ -14,15 +14,34 @@ public class BossController : MonoBehaviour
 
     Duel duel;
 
+    [SerializeField]
+    public int bossHealth = 30;
+    [SerializeField]
+    private float moveSpeed = 1f;
+    [SerializeField]
+    private float rollSpeed = 5f;
+    [SerializeField]
+    private float jumpPower = 7f;
+    [SerializeField]
+    private float shootCd = 1f;
+    [SerializeField]
+    private float jumpCd = 4f;
+    [SerializeField]
+    private float rollCd = 3f;
+
     private int phase = 1;
 
-    private float shootCd = 1f;
     private float shootCurCd = 0f;
+    private float jumpCurCd = 0f;
+    private float rollCurCd = 0f;
     private bool facingRight = true;
     private bool isJumping = false;
     private bool isRolling = false;
 
     public Transform playerTransform;
+
+    private Rigidbody2D bossRb;
+    private Animator bossAnim;
 
     private void Awake()
     {
@@ -31,6 +50,9 @@ public class BossController : MonoBehaviour
     void Start()
     {
         // duel.startDuel = true;
+        bossRb = GetComponent<Rigidbody2D>();
+        bossAnim = GetComponent<Animator>();
+
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         BossHpBar.maxValue = (float)maxHp;
         BossHpBar.value = (float)curHp;
@@ -40,6 +62,7 @@ public class BossController : MonoBehaviour
     void Update()
     {
         Shoot();
+<<<<<<< HEAD
         // Jump();
         // Roll();
         Debug.Log(curHp);
@@ -59,6 +82,28 @@ public class BossController : MonoBehaviour
     void HandleHp()
     {
         BossHpBar.value = Mathf.Lerp(BossHpBar.value, curHp, Time.deltaTime * 10);
+=======
+        
+        if(!isRolling)
+        {
+            Move();
+        }
+        
+        Jump();
+
+        if (!isRolling && !isJumping)
+        {
+            if(rollCurCd <= 0f)
+            {
+                rollCurCd = rollCd;
+                StartCoroutine(Roll());
+            }
+            else if (rollCurCd > 0f)
+            {
+                rollCurCd -= Time.deltaTime;
+            }
+        }
+>>>>>>> 8d723385921bd66bc13b8a3882bcd96bb9c4ebc3
     }
 
     void FixedUpdate()
@@ -66,6 +111,53 @@ public class BossController : MonoBehaviour
 
     }
 
+    void Move()
+    {
+        //move to player
+        if (playerTransform.position.x - transform.position.x > 3f)
+        {
+            bossAnim.SetBool("Running", true);
+            bossRb.velocity = new Vector2(moveSpeed, bossRb.velocity.y);
+            if(!facingRight)
+                Flip();
+            facingRight = true;
+        }
+        else if(playerTransform.position.x - transform.position.x < -3f)
+        {
+            bossAnim.SetBool("Running", true);
+            bossRb.velocity = new Vector2(-moveSpeed, bossRb.velocity.y);
+            if(facingRight)
+                Flip();
+            facingRight = false;
+        }
+        else{
+            bossAnim.SetBool("Running", false);
+        }
+    }
+
+    void Jump()
+    {
+        if (!isJumping && !isRolling && jumpCurCd <= 0f)
+        {
+            jumpCurCd = jumpCd;
+            bossRb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        }
+        else if (jumpCurCd > 0f)
+        {
+            jumpCurCd -= Time.deltaTime;
+        }
+    }
+    // private void OnCollisionStay2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.tag == "Ground")
+    //         isJumping = false;
+    // }
+    
+    // private void OnCollisionExit2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.tag == "Ground")
+    //     isJumping = true;
+    // }
     void Shoot()
     {
         if ((playerTransform.position.x > transform.position.x && facingRight) || (playerTransform.position.x < transform.position.x && !facingRight))
@@ -87,5 +179,33 @@ public class BossController : MonoBehaviour
                 shootCurCd -= Time.deltaTime;
             }   
         }
+    }
+    private IEnumerator Roll()
+    {
+        isRolling = true;
+        InitAnim();
+        bossAnim.SetBool("Rolling", true);
+        if (facingRight)
+        {
+            bossRb.velocity = new Vector2(rollSpeed, bossRb.velocity.y);
+        }
+        else
+        {
+            bossRb.velocity = new Vector2(-rollSpeed, bossRb.velocity.y);
+        }
+        yield return new WaitForSeconds(0.5f);
+        bossAnim.SetBool("Rolling", false);
+        isRolling = false;
+    }
+    private void InitAnim()
+    {
+        bossAnim.SetBool("Running", false);
+        bossAnim.SetBool("Rolling", false);
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
     }
 }
