@@ -6,15 +6,26 @@ public class BossController : MonoBehaviour
 {
     Duel duel;
 
+    [SerializeField]
+    public int enemyHealth = 30;
+    [SerializeField]
+    private float moveSpeed = 5f;
+    [SerializeField]
+    private float jumpPower = 5f;
+    [SerializeField]
+    private float shootCd = 1f;
+
     private int phase = 1;
 
-    private float shootCd = 1f;
     private float shootCurCd = 0f;
     private bool facingRight = true;
     private bool isJumping = false;
     private bool isRolling = false;
 
     public Transform playerTransform;
+
+    private Rigidbody2D bossRb;
+    private Animator bossAnim;
 
     private void Awake()
     {
@@ -23,6 +34,9 @@ public class BossController : MonoBehaviour
     void Start()
     {
         // duel.startDuel = true;
+        bossRb = GetComponent<Rigidbody2D>();
+        bossAnim = GetComponent<Animator>();
+
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
     }
 
@@ -30,13 +44,29 @@ public class BossController : MonoBehaviour
     void Update()
     {
         Shoot();
-        // Jump();
-        // Roll();
+        Jump();
+        if (Input.GetKeyDown(KeyCode.R) && !isRolling && !isJumping)
+        {
+            StartCoroutine(Roll());
+        }
     }
 
     void FixedUpdate()
     {
 
+    }
+
+    void Move()
+    {
+        
+    }
+
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.J) && !isJumping && !isRolling)
+        {
+            bossRb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        }
     }
 
     void Shoot()
@@ -60,5 +90,27 @@ public class BossController : MonoBehaviour
                 shootCurCd -= Time.deltaTime;
             }   
         }
+    }
+    private IEnumerator Roll()
+    {
+        isRolling = true;
+        InitAnim();
+        bossAnim.SetBool("Rolling", true);
+        if (facingRight)
+        {
+            bossRb.velocity = new Vector2(moveSpeed, bossRb.velocity.y);
+        }
+        else
+        {
+            bossRb.velocity = new Vector2(-moveSpeed, bossRb.velocity.y);
+        }
+        yield return new WaitForSeconds(0.5f);
+        bossAnim.SetBool("Rolling", false);
+        isRolling = false;
+    }
+    private void InitAnim()
+    {
+        bossAnim.SetBool("Running", false);
+        bossAnim.SetBool("Rolling", false);
     }
 }
