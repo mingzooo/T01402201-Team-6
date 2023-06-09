@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -36,7 +37,8 @@ public class GameManager : MonoBehaviour
 
     //목숨 갯수
     public Image[] life;
-
+    //재시작버튼
+    public GameObject RetryButton;
 
   private void Awake()
   {
@@ -107,6 +109,14 @@ public class GameManager : MonoBehaviour
     }
   }
 
+
+    //restart 버튼을 누르면
+    public void OnClickRestart()
+    {
+        //첫 장면을 가져오게 된다.
+        SceneManager.LoadScene("Stage_1");
+    }
+
     public void SetPlayerHp(int amount)
     {
         playerHp -= amount;
@@ -114,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLifeIcon(int playerHp)
     {
-        for (int index = 0; index<3; index++)
+        for (int index = 0; index < 3; index++)
         {
             life[index].color = new Color(1, 1, 1, 0);
         }
@@ -123,4 +133,5 @@ public class GameManager : MonoBehaviour
             life[index].color = new Color(1, 1, 1, 1);
         }
     }
+
 }

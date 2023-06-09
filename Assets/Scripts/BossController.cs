@@ -1,9 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossController : MonoBehaviour
 {
+    [SerializeField]
+    private Slider BossHpBar;
+
+    private float maxHp = 100;
+    private float curHp = 100;
+    float temp;
+
     Duel duel;
 
     private int phase = 1;
@@ -24,6 +32,8 @@ public class BossController : MonoBehaviour
     {
         // duel.startDuel = true;
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        BossHpBar.maxValue = (float)maxHp;
+        BossHpBar.value = (float)curHp;
     }
 
     // Update is called once per frame
@@ -32,6 +42,23 @@ public class BossController : MonoBehaviour
         Shoot();
         // Jump();
         // Roll();
+        Debug.Log(curHp);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (curHp > 0){
+                curHp -= 10;
+            }
+            else
+            {
+                curHp = 0;
+            }
+        }
+        HandleHp();
+    }
+
+    void HandleHp()
+    {
+        BossHpBar.value = Mathf.Lerp(BossHpBar.value, curHp, Time.deltaTime * 10);
     }
 
     void FixedUpdate()
