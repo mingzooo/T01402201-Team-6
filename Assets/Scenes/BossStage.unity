@@ -277,6 +277,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3412570126068588849, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3412570126068588851, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -325,10 +329,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 3412570126068588855, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
+      propertyPath: m_TagString
+      value: Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 3412570126068588877, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ba3ab73ef54236241aa54f341a914024, type: 2}
+    - target: {fileID: 8131256346358903319, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8131256346358903319, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
+      propertyPath: enemyHealth
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c187d552eb18e44965a3c486443b25, type: 3}
 --- !u!1 &389437692

@@ -7,17 +7,25 @@ public class BossController : MonoBehaviour
     Duel duel;
 
     [SerializeField]
-    public int enemyHealth = 30;
+    public int bossHealth = 30;
     [SerializeField]
-    private float moveSpeed = 5f;
+    private float moveSpeed = 1f;
     [SerializeField]
-    private float jumpPower = 5f;
+    private float rollSpeed = 5f;
+    [SerializeField]
+    private float jumpPower = 7f;
     [SerializeField]
     private float shootCd = 1f;
+    [SerializeField]
+    private float jumpCd = 4f;
+    [SerializeField]
+    private float rollCd = 3f;
 
     private int phase = 1;
 
     private float shootCurCd = 0f;
+    private float jumpCurCd = 0f;
+    private float rollCurCd = 0f;
     private bool facingRight = true;
     private bool isJumping = false;
     private bool isRolling = false;
@@ -44,10 +52,25 @@ public class BossController : MonoBehaviour
     void Update()
     {
         Shoot();
-        Jump();
-        if (Input.GetKeyDown(KeyCode.R) && !isRolling && !isJumping)
+        
+        if(!isRolling)
         {
-            StartCoroutine(Roll());
+            Move();
+        }
+        
+        Jump();
+
+        if (!isRolling && !isJumping)
+        {
+            if(rollCurCd <= 0f)
+            {
+                rollCurCd = rollCd;
+                StartCoroutine(Roll());
+            }
+            else if (rollCurCd > 0f)
+            {
+                rollCurCd -= Time.deltaTime;
+            }
         }
     }
 
@@ -58,17 +81,51 @@ public class BossController : MonoBehaviour
 
     void Move()
     {
-        
+        //move to player
+        if (playerTransform.position.x - transform.position.x > 3f)
+        {
+            bossAnim.SetBool("Running", true);
+            bossRb.velocity = new Vector2(moveSpeed, bossRb.velocity.y);
+            if(!facingRight)
+                Flip();
+            facingRight = true;
+        }
+        else if(playerTransform.position.x - transform.position.x < -3f)
+        {
+            bossAnim.SetBool("Running", true);
+            bossRb.velocity = new Vector2(-moveSpeed, bossRb.velocity.y);
+            if(facingRight)
+                Flip();
+            facingRight = false;
+        }
+        else{
+            bossAnim.SetBool("Running", false);
+        }
     }
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.J) && !isJumping && !isRolling)
+        if (!isJumping && !isRolling && jumpCurCd <= 0f)
         {
+            jumpCurCd = jumpCd;
             bossRb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
+        else if (jumpCurCd > 0f)
+        {
+            jumpCurCd -= Time.deltaTime;
+        }
     }
-
+    // private void OnCollisionStay2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.tag == "Ground")
+    //         isJumping = false;
+    // }
+    
+    // private void OnCollisionExit2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.tag == "Ground")
+    //     isJumping = true;
+    // }
     void Shoot()
     {
         if ((playerTransform.position.x > transform.position.x && facingRight) || (playerTransform.position.x < transform.position.x && !facingRight))
@@ -98,11 +155,11 @@ public class BossController : MonoBehaviour
         bossAnim.SetBool("Rolling", true);
         if (facingRight)
         {
-            bossRb.velocity = new Vector2(moveSpeed, bossRb.velocity.y);
+            bossRb.velocity = new Vector2(rollSpeed, bossRb.velocity.y);
         }
         else
         {
-            bossRb.velocity = new Vector2(-moveSpeed, bossRb.velocity.y);
+            bossRb.velocity = new Vector2(-rollSpeed, bossRb.velocity.y);
         }
         yield return new WaitForSeconds(0.5f);
         bossAnim.SetBool("Rolling", false);
@@ -112,5 +169,11 @@ public class BossController : MonoBehaviour
     {
         bossAnim.SetBool("Running", false);
         bossAnim.SetBool("Rolling", false);
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
     }
 }
