@@ -49,7 +49,7 @@ public class BulletController : MonoBehaviour
     {
         if (attacker.tag == "Enemy" || attacker.tag == "Boss")
         {
-            if (target.tag == "Player")
+            if (target.tag == "Player" && !target.GetComponent<PlayerController>().CheckRoll())
             {
                 GameManager.Instance.SetPlayerHp(damage);
                 DestroyBullet();
@@ -62,7 +62,7 @@ public class BulletController : MonoBehaviour
                 target.GetComponent<EnemyController>().enemyHealth -= damage;
                 DestroyBullet();
             }
-            if (target.tag == "Boss")
+            if (target.tag == "Boss" && !target.GetComponent<BossController>().CheckRoll())
             {
                 target.GetComponent<BossController>().BossCurHp -= damage;
                 DestroyBullet();

@@ -72,6 +72,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool CheckRoll()
+    {
+        return isRolling;
+    }
+
     private void Flip()
     {
         facingRight = !facingRight;

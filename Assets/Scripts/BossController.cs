@@ -93,6 +93,10 @@ public class BossController : MonoBehaviour
 
     }
 
+    public bool CheckRoll()
+    {
+        return isRolling;
+    }
     void Move()
     {
         //move to player
