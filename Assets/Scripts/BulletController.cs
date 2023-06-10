@@ -5,10 +5,17 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     [SerializeField]
-    private float bulletSpeed = 1f;
+    private float bulletSpeed = 5f;
     private Vector3 direction;
     private GameObject owner;
     private int damage = 1;
+    private Rigidbody2D bulletRb;
+
+
+    private void Awake()
+    {
+        bulletRb = GetComponent<Rigidbody2D>();
+    }
 
     public void SetOwner(GameObject gameobject)
     {
@@ -31,7 +38,7 @@ public class BulletController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.Translate(direction);
+        bulletRb.velocity = direction;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
