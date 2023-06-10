@@ -114,11 +114,12 @@ public class GameManager : MonoBehaviour
     public void SetPlayerHp(int amount)
     {
         playerHp -= amount;
+        UpdateLifeIcon(playerHp);
     }
 
     public void UpdateLifeIcon(int playerHp)
     {
-        for (int index = 0; index < 3; index++)
+        for (int index = 0; index < 5; index++)
         {
             life[index].color = new Color(1, 1, 1, 0);
         }
