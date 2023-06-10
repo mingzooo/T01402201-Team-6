@@ -41,9 +41,9 @@ public class BulletController : MonoBehaviour
         bulletRb.velocity = direction;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        Damage(owner, collision.gameObject, damage);
+        Damage(owner, collider.gameObject, damage);
     }
     private void Damage(GameObject attacker, GameObject target, int damage)
     {

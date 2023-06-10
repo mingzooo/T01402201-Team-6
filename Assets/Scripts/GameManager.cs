@@ -86,11 +86,6 @@ public class GameManager : MonoBehaviour
     // TODO: 게임 일시 정지 로직 구현
   }
 
-  public void PlayerDamaged(int damage)
-  {
-    playerHp -= damage;
-  }
-
   public bool CheckAllEnemiesDefeated()
   {
     if (remainingEnemies <= 0)

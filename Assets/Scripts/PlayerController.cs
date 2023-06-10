@@ -114,11 +114,11 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetBool("Rolling", true);
         if (facingRight)
         {
-            playerRb.velocity = new Vector2(moveSpeed, playerRb.velocity.y);
+            playerRb.velocity = new Vector2(moveSpeed*2f, playerRb.velocity.y);
         }
         else
         {
-            playerRb.velocity = new Vector2(-moveSpeed, playerRb.velocity.y);
+            playerRb.velocity = new Vector2(-moveSpeed*2f, playerRb.velocity.y);
         }
         yield return new WaitForSeconds(0.5f);
         playerAnim.SetBool("Rolling", false);
