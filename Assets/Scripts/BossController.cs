@@ -8,14 +8,12 @@ public class BossController : MonoBehaviour
     [SerializeField]
     private Slider BossHpBar;
 
-    private float maxHp = 100;
-    private float curHp = 100;
-    float temp;
-
     Duel duel;
 
     [SerializeField]
-    public int bossHealth = 30;
+    public float BossMaxHp = 30;
+    [SerializeField]
+    public float BossCurHp = 30;
     [SerializeField]
     private float moveSpeed = 1f;
     [SerializeField]
@@ -54,8 +52,8 @@ public class BossController : MonoBehaviour
         bossAnim = GetComponent<Animator>();
 
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-        BossHpBar.maxValue = (float)maxHp;
-        BossHpBar.value = (float)curHp;
+        BossHpBar.maxValue = (float)BossMaxHp;
+        BossHpBar.value = (float)BossCurHp;
     }
 
     // Update is called once per frame
@@ -82,23 +80,12 @@ public class BossController : MonoBehaviour
             }
         }
 
-        Debug.Log(curHp);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (curHp > 0){
-                curHp -= 10;
-            }
-            else
-            {
-                curHp = 0;
-            }
-        }
         HandleHp();
     }
 
     void HandleHp()
     {
-        BossHpBar.value = Mathf.Lerp(BossHpBar.value, curHp, Time.deltaTime * 10);
+        BossHpBar.value = Mathf.Lerp(BossHpBar.value, BossCurHp, Time.deltaTime * 10);
     }
 
     void FixedUpdate()
