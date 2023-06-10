@@ -57,7 +57,7 @@ public class BulletController : MonoBehaviour
             }
             if (target.tag == "Boss")
             {
-                target.GetComponent<BossController>().bossHealth -= damage;
+                target.GetComponent<BossController>().BossCurHp -= damage;
                 DestroyBullet();
             }
         }

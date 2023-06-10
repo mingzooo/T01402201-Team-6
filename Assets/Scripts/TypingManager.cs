@@ -30,8 +30,6 @@ public class TypingManager : MonoBehaviour
 
     float timer; //내부적으로 돌아가는 시간 타이머
 
-    public GameObject RetryButton;
-
     private void Awake()
     {
         if (instance == null)
@@ -40,7 +38,6 @@ public class TypingManager : MonoBehaviour
         }
         timer = timeForCharacter;
         characterTime = timeForCharacter;
-        RetryButton.SetActive(false);
     }
 
     public void Typing(string[] dialogs, TextMeshProUGUI textObj)
@@ -60,10 +57,6 @@ public class TypingManager : MonoBehaviour
             {
                 SceneManager.LoadScene("Stage_1");
             }
-            //else if (SceneManager.GetActiveScene().name == "EndScene")
-            //{
-            //    //RetryButton.SetActive(true);
-            //}
         }
         else
         {
