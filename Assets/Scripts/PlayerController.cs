@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+  // AudioSource 컴포넌트를 저장할 변수
+  private AudioSource audioSource;
+
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
@@ -80,7 +83,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
         {
             shootCurCd = shootCd;
-            audiosource.Play();
+
+            // Play gun sound
+            audioSource.Play();
+
             GameObject bullet = ObjectPooling.GetObject();
             float dir = 1f;
             if (!facingRight)
