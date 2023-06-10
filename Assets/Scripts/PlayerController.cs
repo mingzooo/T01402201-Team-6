@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-  // AudioSource 컴포넌트를 저장할 변수
-  private AudioSource audioSource;
+    // AudioSource 컴포넌트를 저장할 변수
+    private AudioSource audioSource;
 
     [SerializeField]
     private float moveSpeed = 5f;
@@ -23,23 +23,23 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool isRolling = false;
 
-  private void Awake()
-  {
-    playerRb = GetComponent<Rigidbody2D>();
-    // AudioSource 컴포넌트 추출, 변수 할당
-    audioSource = GetComponent<AudioSource>();
-  }
+    private void Awake()
+    {
+        playerRb = GetComponent<Rigidbody2D>();
+        // AudioSource 컴포넌트 추출, 변수 할당
+        audioSource = GetComponent<AudioSource>();
+    }
 
-  // Start is called before the first frame update
-  void Start()
-  {
-    playerRb = GetComponent<Rigidbody2D>();
-    playerAnim = GetComponent<Animator>();
-  }
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerRb = GetComponent<Rigidbody2D>();
+        playerAnim = GetComponent<Animator>();
+    }
 
-  // Update is called once per frame
-  void Update()
-  {
+    // Update is called once per frame
+    void Update()
+    {
         Shoot();
         Jump();
 
@@ -47,39 +47,39 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Roll());
         }
-  }
-
-  private void FixedUpdate()
-  {
-    if (!isRolling)
-    {
-      float move = Input.GetAxisRaw("Horizontal");
-      playerRb.velocity = new Vector2(move * moveSpeed, playerRb.velocity.y);
-
-      if (move == 0f)
-        playerAnim.SetBool("Running", false);
-      else
-        playerAnim.SetBool("Running", true);
-
-      if (move > 0 && !facingRight)
-      {
-        Flip();
-      }
-      else if (move < 0 && facingRight)
-      {
-        Flip();
-      }
     }
-  }
 
-  private void Flip()
-  {
-    facingRight = !facingRight;
-    Vector3 scale = transform.localScale;
-    scale.x *= -1;
-    transform.localScale = scale;
-  }
-  private void Shoot()
+    private void FixedUpdate()
+    {
+        if (!isRolling)
+        {
+            float move = Input.GetAxisRaw("Horizontal");
+            playerRb.velocity = new Vector2(move * moveSpeed, playerRb.velocity.y);
+
+            if (move == 0f)
+                playerAnim.SetBool("Running", false);
+            else
+                playerAnim.SetBool("Running", true);
+
+            if (move > 0 && !facingRight)
+            {
+                Flip();
+            }
+            else if (move < 0 && facingRight)
+            {
+                Flip();
+            }
+        }
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+    private void Shoot()
     {
         if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
         {
@@ -100,64 +100,64 @@ public class PlayerController : MonoBehaviour
             shootCurCd -= Time.deltaTime;
         }
     }
-  private void Jump()
-  {
-    if (Input.GetKeyDown(KeyCode.X) && !isJumping && !isRolling)
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.X) && !isJumping && !isRolling)
         {
             playerRb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
-  }
-  private IEnumerator Roll()
-  {
-    isRolling = true;
-    InitAnim();
-    playerAnim.SetBool("Rolling", true);
-    if (facingRight)
-    {
-      playerRb.velocity = new Vector2(moveSpeed, playerRb.velocity.y);
     }
-    else
+    private IEnumerator Roll()
     {
-      playerRb.velocity = new Vector2(-moveSpeed, playerRb.velocity.y);
+        isRolling = true;
+        InitAnim();
+        playerAnim.SetBool("Rolling", true);
+        if (facingRight)
+        {
+            playerRb.velocity = new Vector2(moveSpeed, playerRb.velocity.y);
+        }
+        else
+        {
+            playerRb.velocity = new Vector2(-moveSpeed, playerRb.velocity.y);
+        }
+        yield return new WaitForSeconds(0.5f);
+        playerAnim.SetBool("Rolling", false);
+        isRolling = false;
     }
-    yield return new WaitForSeconds(0.5f);
-    playerAnim.SetBool("Rolling", false);
-    isRolling = false;
-  }
-  private void InitAnim()
+    private void InitAnim()
     {
         playerAnim.SetBool("Running", false);
         playerAnim.SetBool("Rolling", false);
     }
 
-  
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
             isJumping = false;
     }
-    
-    private void OnCollisionExit2D(Collision2D collision)
-  {
-    if (collision.gameObject.tag == "Ground")
-      isJumping = true;
-  }
 
-  private void OnTriggerEnter2D(Collider2D collision)
-  {
-    // 포탈에 닿으면
-    if (collision.gameObject.CompareTag("Finish"))
+    private void OnCollisionExit2D(Collision2D collision)
     {
-      // 모든 적을 물리치면 다음 스테이지로
-      if (GameManager.Instance.CheckAllEnemiesDefeated())
-      {
-        GameManager.Instance.LoadNextStage();
-      }
-      // 적이 남아있으면
-      else
-      {
-        Debug.Log("Cannot proceed to the next stage. Defeat all enemies first!");
-      }
+        if (collision.gameObject.tag == "Ground")
+            isJumping = true;
     }
-  }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // 포탈에 닿으면
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            // 모든 적을 물리치면 다음 스테이지로
+            if (GameManager.Instance.CheckAllEnemiesDefeated())
+            {
+                GameManager.Instance.LoadNextStage();
+            }
+            // 적이 남아있으면
+            else
+            {
+                Debug.Log("Cannot proceed to the next stage. Defeat all enemies first!");
+            }
+        }
+    }
 }
