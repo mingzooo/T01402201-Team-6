@@ -23,11 +23,20 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool isRolling = false;
 
+<<<<<<< HEAD
     private void Awake()
     {
         playerRb = GetComponent<Rigidbody2D>();
         audiosource = GetComponent<AudioSource>();
     }
+=======
+  private void Awake()
+  {
+    playerRb = GetComponent<Rigidbody2D>();
+    // AudioSource 컴포넌트 추출, 변수 할당
+    audioSource = GetComponent<AudioSource>();
+  }
+>>>>>>> 8db00180e5bbadc2e5fbf031c8c3f18bfc77dca0
 
   // Start is called before the first frame update
   void Start()
@@ -83,10 +92,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
         {
             shootCurCd = shootCd;
+<<<<<<< HEAD
 
             // Play gun sound
             audioSource.Play();
 
+=======
+            // Play gun sound
+            audioSource.Play();
+>>>>>>> 8db00180e5bbadc2e5fbf031c8c3f18bfc77dca0
             GameObject bullet = ObjectPooling.GetObject();
             float dir = 1f;
             if (!facingRight)
