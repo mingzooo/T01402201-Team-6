@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Analytics;
+using UnityEngine.SceneManagement;
+using UnityEditor.SearchService;
 
 public class TypingManager : MonoBehaviour
 {
@@ -27,6 +30,8 @@ public class TypingManager : MonoBehaviour
 
     float timer; //내부적으로 돌아가는 시간 타이머
 
+    public GameObject RetryButton;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +40,7 @@ public class TypingManager : MonoBehaviour
         }
         timer = timeForCharacter;
         characterTime = timeForCharacter;
+        RetryButton.SetActive(false);
     }
 
     public void Typing(string[] dialogs, TextMeshProUGUI textObj)
@@ -46,6 +52,18 @@ public class TypingManager : MonoBehaviour
         {
             char[] chars = dialogs[dialogNumber].ToCharArray(); //받아온 다이얼 로그를 char로 변환.
             StartCoroutine(Typer(chars, textObj)); //레퍼런스로 넘겨보는거 테스트 해보자.
+        }
+        else if (dialogNumber == dialogs.Length)
+        {
+            //Debug.Log("타이핑 끝");
+            if(SceneManager.GetActiveScene().name == "StartStory")
+            {
+                SceneManager.LoadScene("Stage_1");
+            }
+            //else if (SceneManager.GetActiveScene().name == "EndScene")
+            //{
+            //    //RetryButton.SetActive(true);
+            //}
         }
         else
         {

@@ -252,6 +252,7 @@ MonoBehaviour:
     \uB0A8\uAE34 \uAC15\uC544\uC9C0 \uB370\uC774\uC9C0\uC640 \uD558\uB8E8\uD558\uB8E8\uB97C
     \uC0B4\uACE0\uC788\uB294\uB370.."
   - "\uC5B4\uB5A4 \uC591\uC544\uCE58\uAC00 \uB370\uC774\uC9C0\uB97C \uC8FD\uC600\uB2E4.."
+  - "\uC9C0\uAE08\uBD80\uD130 \uBCF5\uC218\uD558\uB7EC \uAC00\uBCF4\uC790.."
   textObj: {fileID: 1745250573}
 --- !u!1 &1016758395
 GameObject:
@@ -778,7 +779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

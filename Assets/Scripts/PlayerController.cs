@@ -14,8 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float shootCd = 0.5f;
 
-  private Rigidbody2D playerRb; // 플레이어의 리지드바디
-  private Animator playerAnim;
+    private Rigidbody2D playerRb; // 플레이어의 리지드바디
+    private Animator playerAnim;
+    private AudioSource audiosource;
 
     private float shootCurCd = 0f;
     private bool facingRight = true;
@@ -83,10 +84,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
         {
             shootCurCd = shootCd;
-
             // Play gun sound
             audioSource.Play();
-           
             GameObject bullet = ObjectPooling.GetObject();
             float dir = 1f;
             if (!facingRight)

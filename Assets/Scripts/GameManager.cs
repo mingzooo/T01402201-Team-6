@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
       return _instance;
     }
   }
-
+[SerializeField]
   private int playerHp;
 
   // 스테이지 씬 이름 배열    
@@ -34,10 +35,14 @@ public class GameManager : MonoBehaviour
   // 현재 스테이지에서 남은 적의 수
   private int remainingEnemies;
 
+    //목숨 갯수
+    public Image[] life;
+    //재시작버튼
+    public GameObject RetryButton;
 
   private void Awake()
   {
-    if (_instance = null) _instance = this;
+    if (_instance == null) _instance = this;
     else if (_instance != this) Destroy(gameObject);
     DontDestroyOnLoad(gameObject);
     Init();
@@ -104,8 +109,29 @@ public class GameManager : MonoBehaviour
     }
   }
 
+
+    //restart 버튼을 누르면
+    public void OnClickRestart()
+    {
+        //첫 장면을 가져오게 된다.
+        SceneManager.LoadScene("Stage_1");
+    }
+
     public void SetPlayerHp(int amount)
     {
         playerHp -= amount;
     }
+
+    public void UpdateLifeIcon(int playerHp)
+    {
+        for (int index = 0; index < 3; index++)
+        {
+            life[index].color = new Color(1, 1, 1, 0);
+        }
+        for (int index = 0; index < playerHp; index++)
+        {
+            life[index].color = new Color(1, 1, 1, 1);
+        }
+    }
+
 }
