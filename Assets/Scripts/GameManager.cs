@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
   // 스테이지 씬 이름 배열    
   [SerializeField]
-  private string[] sceneNames = { "Stage_1", "Stage_2", "Stage_3" };
+  private string[] sceneNames;
   // 각 스테이지 별 적의 수
   private int[] stageEnemyCounts = { 1, 25, 30 };
 
