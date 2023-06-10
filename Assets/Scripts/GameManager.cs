@@ -22,23 +22,24 @@ public class GameManager : MonoBehaviour
       return _instance;
     }
   }
-[SerializeField]
+  [SerializeField]
   private int playerHp;
 
   // 스테이지 씬 이름 배열    
-  public string[] sceneNames;
+  [SerializeField]
+  private string[] sceneNames;
   // 각 스테이지 별 적의 수
-  private int[] stageEnemyCounts = { 20, 25, 30 };
+  private int[] stageEnemyCounts = { 1, 25, 30 };
 
   // 현재 스테이지 인덱스
   private int currentStageIndex = 0;
   // 현재 스테이지에서 남은 적의 수
   private int remainingEnemies;
 
-    //목숨 갯수
-    public Image[] life;
-    //재시작버튼
-    public GameObject RetryButton;
+  //목숨 갯수
+  public Image[] life;
+  //재시작버튼
+  public GameObject RetryButton;
 
   private void Awake()
   {
@@ -99,29 +100,29 @@ public class GameManager : MonoBehaviour
   }
 
 
-    //restart 버튼을 누르면
-    public void OnClickRestart()
-    {
-        //첫 장면을 가져오게 된다.
-        SceneManager.LoadScene("Stage_1");
-    }
+  //restart 버튼을 누르면
+  public void OnClickRestart()
+  {
+    //첫 장면을 가져오게 된다.
+    SceneManager.LoadScene("Stage_1");
+  }
 
-    public void SetPlayerHp(int amount)
-    {
-        playerHp -= amount;
-        UpdateLifeIcon(playerHp);
-    }
+  public void SetPlayerHp(int amount)
+  {
+    playerHp -= amount;
+    UpdateLifeIcon(playerHp);
+  }
 
-    public void UpdateLifeIcon(int playerHp)
+  public void UpdateLifeIcon(int playerHp)
+  {
+    for (int index = 0; index < 5; index++)
     {
-        for (int index = 0; index < 5; index++)
-        {
-            life[index].color = new Color(1, 1, 1, 0);
-        }
-        for (int index = 0; index < playerHp; index++)
-        {
-            life[index].color = new Color(1, 1, 1, 1);
-        }
+      life[index].color = new Color(1, 1, 1, 0);
     }
+    for (int index = 0; index < playerHp; index++)
+    {
+      life[index].color = new Color(1, 1, 1, 1);
+    }
+  }
 
 }
