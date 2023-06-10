@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8131256346358903319}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,7 +136,7 @@ Animator:
   m_GameObject: {fileID: 3412570126068588855}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4053d479d5c66e745a768fcae519cb59, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba3ab73ef54236241aa54f341a914024, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -177,7 +177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d74e6ed2048704282219e111030e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BossHpBar: {fileID: 2166281124993964191, guid: e039504c90a3b1f4190729f10ce9f13f, type: 3}
+  bossHealth: 30
   moveSpeed: 5
+  rollSpeed: 5
   jumpPower: 5
   shootCd: 1
+  jumpCd: 4
+  rollCd: 3
   playerTransform: {fileID: 0}

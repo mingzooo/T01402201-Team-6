@@ -53,12 +53,6 @@ public class GameManager : MonoBehaviour
     playerHp = 5;
   }
 
-  private void Start()
-  {
-    remainingEnemies = stageEnemyCounts[currentStageIndex];
-    LoadStage(sceneNames[currentStageIndex]);
-  }
-
   private void Update()
   {
     if (Input.GetKeyDown(KeyCode.Escape))
