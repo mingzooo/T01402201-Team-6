@@ -21,7 +21,7 @@ public class BossController : MonoBehaviour
     [SerializeField]
     private float jumpPower = 7f;
     [SerializeField]
-    private float shootCd = 1f;
+    private float shootCd = 1.5f;
     [SerializeField]
     private float jumpCd = 4f;
     [SerializeField]
@@ -29,10 +29,10 @@ public class BossController : MonoBehaviour
 
     private int phase = 1;
 
-    private float shootCurCd = 0f;
+    private float shootCurCd = 1.5f;
     private float jumpCurCd = 0f;
     private float rollCurCd = 0f;
-    private bool facingRight = true;
+    public bool facingRight = true;
     private bool isJumping = false;
     private bool isRolling = false;
 
@@ -47,40 +47,42 @@ public class BossController : MonoBehaviour
     }
     void Start()
     {
-        // duel.startDuel = true;
         bossRb = GetComponent<Rigidbody2D>();
         bossAnim = GetComponent<Animator>();
 
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-        BossHpBar.maxValue = (float)BossMaxHp;
-        BossHpBar.value = (float)BossCurHp;
+        BossHpBar.maxValue = BossMaxHp;
+        BossHpBar.value = BossCurHp;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Shoot();
+        if(!duel.startDuel) Shoot();
         if (!isRolling)
         {
             Move();
         }
 
-        Jump();
-
-        if (!isRolling && !isJumping)
+        if (!duel.startDuel && phase > 1)
         {
-            if (rollCurCd <= 0f)
+            Jump();
+            if (!isRolling && !isJumping)
             {
-                rollCurCd = rollCd;
-                StartCoroutine(Roll());
-            }
-            else if (rollCurCd > 0f)
-            {
-                rollCurCd -= Time.deltaTime;
+                if (rollCurCd <= 0f)
+                {
+                    rollCurCd = rollCd;
+                    StartCoroutine(Roll());
+                }
+                else if (rollCurCd > 0f)
+                {
+                    rollCurCd -= Time.deltaTime;
+                }
             }
         }
 
         HandleHp();
+        HandlePhase();
     }
 
     void HandleHp()
@@ -88,9 +90,23 @@ public class BossController : MonoBehaviour
         BossHpBar.value = Mathf.Lerp(BossHpBar.value, BossCurHp, Time.deltaTime * 10);
     }
 
-    void FixedUpdate()
+    void HandlePhase()
     {
-
+        if (BossCurHp == 20 && phase == 1)
+        {
+            duel.startDuel = true;
+            phase = 2;
+        }
+        else if (BossCurHp == 10 && phase == 2)
+        {
+            duel.startDuel = true;
+            shootCd = 1f;
+            phase = 3;
+        }
+        else if (BossCurHp <= 0 && phase == 3)
+        {
+            GameManager.Instance.LoadNextStage();
+        }
     }
 
     public bool CheckRoll()
@@ -100,7 +116,7 @@ public class BossController : MonoBehaviour
     void Move()
     {
         //move to player
-        if (playerTransform.position.x - transform.position.x > 3f)
+        if (playerTransform.position.x - transform.position.x > 8f)
         {
             bossAnim.SetBool("Running", true);
             bossRb.velocity = new Vector2(moveSpeed, bossRb.velocity.y);
@@ -108,7 +124,7 @@ public class BossController : MonoBehaviour
                 Flip();
             facingRight = true;
         }
-        else if(playerTransform.position.x - transform.position.x < -3f)
+        else if(playerTransform.position.x - transform.position.x < -8f)
         {
             bossAnim.SetBool("Running", true);
             bossRb.velocity = new Vector2(-moveSpeed, bossRb.velocity.y);
@@ -116,7 +132,20 @@ public class BossController : MonoBehaviour
                 Flip();
             facingRight = false;
         }
-        else{
+        else if(playerTransform.position.x > transform.position.x)
+        {
+            if (!facingRight)
+                Flip();
+            facingRight = true;
+        }
+        else if (playerTransform.position.x < transform.position.x)
+        {
+            if (facingRight)
+                Flip();
+            facingRight = false;
+        }
+        else
+        {
             bossAnim.SetBool("Running", false);
         }
     }
@@ -155,7 +184,7 @@ public class BossController : MonoBehaviour
                 float dir = 1f;
                 if (!facingRight)
                     dir *= -1f;
-                Vector3 spawnPos = new Vector3(transform.position.x + dir * 0.7f, transform.position.y + 1.29f, transform.position.z);
+                Vector3 spawnPos = new Vector3(transform.position.x + dir * 0.77f, transform.position.y + 1.53f, transform.position.z);
                 bullet.transform.position = spawnPos;
                 bullet.GetComponent<BulletController>().SetOwner(gameObject);
                 bullet.GetComponent<BulletController>().Shoot(dir);
@@ -183,13 +212,13 @@ public class BossController : MonoBehaviour
         bossAnim.SetBool("Rolling", false);
         isRolling = false;
     }
-    private void InitAnim()
+    public void InitAnim()
     {
         bossAnim.SetBool("Running", false);
         bossAnim.SetBool("Rolling", false);
     }
 
-    private void Flip()
+    public void Flip()
     {
         facingRight = !facingRight;
         transform.Rotate(0f, 180f, 0f);
