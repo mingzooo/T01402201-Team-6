@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // AudioSource 컴포넌트를 저장할 변수
-    private AudioSource audioSource;
 
     [SerializeField]
     private float moveSpeed = 5f;
@@ -19,15 +17,13 @@ public class PlayerController : MonoBehaviour
     private AudioSource audiosource;
 
     private float shootCurCd = 0f;
-    private bool facingRight = true;
+    public bool facingRight = true;
     private bool isJumping = false;
     private bool isRolling = false;
 
     private void Awake()
     {
         playerRb = GetComponent<Rigidbody2D>();
-        // AudioSource 컴포넌트 추출, 변수 할당
-        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -43,7 +39,7 @@ public class PlayerController : MonoBehaviour
         Shoot();
         Jump();
 
-        if (Input.GetKeyDown(KeyCode.C) && !isRolling && !isJumping)
+        if (Input.GetKeyDown(KeyCode.C) && !isRolling && !isJumping && !GameManager.Instance.Dueling)
         {
             StartCoroutine(Roll());
         }
@@ -51,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isRolling)
+        if (!isRolling && !GameManager.Instance.Dueling)
         {
             float move = Input.GetAxisRaw("Horizontal");
             playerRb.velocity = new Vector2(move * moveSpeed, playerRb.velocity.y);
@@ -72,7 +68,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public bool CheckRoll()
+    {
+        return isRolling;
+    }
+
+    public void Flip()
     {
         facingRight = !facingRight;
         Vector3 scale = transform.localScale;
@@ -81,16 +82,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Shoot()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f)
+        if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f && !GameManager.Instance.Dueling)
         {
             shootCurCd = shootCd;
-            // Play gun sound
-            audioSource.Play();
             GameObject bullet = ObjectPooling.GetObject();
             float dir = 1f;
             if (!facingRight)
                 dir *= -1f;
-            Vector3 spawnPos = new Vector3(transform.position.x + dir * 0.7f, transform.position.y + 1.29f, transform.position.z);
+            Vector3 spawnPos = new Vector3(transform.position.x + dir * 0.77f, transform.position.y + 1.53f, transform.position.z);
             bullet.transform.position = spawnPos;
             bullet.GetComponent<BulletController>().SetOwner(gameObject);
             bullet.GetComponent<BulletController>().Shoot(dir);
@@ -102,7 +101,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.X) && !isJumping && !isRolling)
+        if (Input.GetKeyDown(KeyCode.X) && !isJumping && !isRolling && !GameManager.Instance.Dueling)
         {
             playerRb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
@@ -114,17 +113,17 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetBool("Rolling", true);
         if (facingRight)
         {
-            playerRb.velocity = new Vector2(moveSpeed, playerRb.velocity.y);
+            playerRb.velocity = new Vector2(moveSpeed*1.5f, playerRb.velocity.y);
         }
         else
         {
-            playerRb.velocity = new Vector2(-moveSpeed, playerRb.velocity.y);
+            playerRb.velocity = new Vector2(-moveSpeed*1.5f, playerRb.velocity.y);
         }
         yield return new WaitForSeconds(0.5f);
         playerAnim.SetBool("Rolling", false);
         isRolling = false;
     }
-    private void InitAnim()
+    public void InitAnim()
     {
         playerAnim.SetBool("Running", false);
         playerAnim.SetBool("Rolling", false);

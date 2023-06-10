@@ -165,6 +165,7 @@ MonoBehaviour:
   startDuel: 0
   isDuel: 0
   keyText: {fileID: 0}
+  timeSlider: {fileID: 0}
 --- !u!114 &8131256346358903319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,11 +179,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BossHpBar: {fileID: 2166281124993964191, guid: e039504c90a3b1f4190729f10ce9f13f, type: 3}
-  bossHealth: 30
+  BossMaxHp: 30
+  BossCurHp: 30
   moveSpeed: 5
   rollSpeed: 5
   jumpPower: 5
-  shootCd: 1
+  shootCd: 1.5
   jumpCd: 4
   rollCd: 3
   playerTransform: {fileID: 0}

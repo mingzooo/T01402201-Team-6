@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
   //재시작버튼
   public GameObject RetryButton;
 
+    public bool Dueling = false;
+
+
   private void Awake()
   {
     if (_instance == null) _instance = this;
@@ -87,10 +90,6 @@ public class GameManager : MonoBehaviour
     // TODO: 게임 일시 정지 로직 구현
   }
 
-  public void PlayerDamaged(int damage)
-  {
-    playerHp -= damage;
-  }
 
   public bool CheckAllEnemiesDefeated()
   {
@@ -110,6 +109,7 @@ public class GameManager : MonoBehaviour
   {
     //첫 장면을 가져오게 된다.
     SceneManager.LoadScene("Stage_1");
+    currentStageIndex = 2;
   }
 
   public void SetPlayerHp(int amount)
@@ -117,6 +117,13 @@ public class GameManager : MonoBehaviour
     playerHp -= amount;
     UpdateLifeIcon(playerHp);
   }
+
+    public void RestartGame()
+    {
+        currentStageIndex = 2;
+        LoadStage(sceneNames[currentStageIndex]);
+    }
+
 
   public void UpdateLifeIcon(int playerHp)
   {

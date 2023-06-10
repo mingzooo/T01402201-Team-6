@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    // AudioSource 컴포넌트를 저장할 변수
+    private AudioSource audioSource;
+
     [SerializeField]
     private float bulletSpeed = 5f;
     private Vector3 direction;
@@ -15,6 +18,8 @@ public class BulletController : MonoBehaviour
     private void Awake()
     {
         bulletRb = GetComponent<Rigidbody2D>();
+        // AudioSource 컴포넌트 추출, 변수 할당
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetOwner(GameObject gameobject)
@@ -30,26 +35,34 @@ public class BulletController : MonoBehaviour
     public void Shoot(float dir)
     {
         this.direction = new Vector3(dir*bulletSpeed,0,0);
-        Invoke("DestroyBullet", 5f);
+        // Play gun sound
+        audioSource.Play();
     }
     public void DestroyBullet()
     {
         ObjectPooling.ReturnObjectToQueue(gameObject);
     }
+
+
+    private void Update()
+    {
+        if (transform.position.x > 300f || transform.position.x < -100f) DestroyBullet();
+    }
+
     void FixedUpdate()
     {
         bulletRb.velocity = direction;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        Damage(owner, collision.gameObject, damage);
+        Damage(owner, collider.gameObject, damage);
     }
     private void Damage(GameObject attacker, GameObject target, int damage)
     {
         if (attacker.tag == "Enemy" || attacker.tag == "Boss")
         {
-            if (target.tag == "Player")
+            if (target.tag == "Player" && !target.GetComponent<PlayerController>().CheckRoll())
             {
                 GameManager.Instance.SetPlayerHp(damage);
                 DestroyBullet();
@@ -62,7 +75,7 @@ public class BulletController : MonoBehaviour
                 target.GetComponent<EnemyController>().enemyHealth -= damage;
                 DestroyBullet();
             }
-            if (target.tag == "Boss")
+            if (target.tag == "Boss" && !target.GetComponent<BossController>().CheckRoll())
             {
                 target.GetComponent<BossController>().BossCurHp -= damage;
                 DestroyBullet();

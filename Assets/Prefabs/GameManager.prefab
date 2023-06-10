@@ -54,5 +54,10 @@ MonoBehaviour:
   - Stage_Final
   - EndStory
   - EndScene
-  life: []
+  life:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   RetryButton: {fileID: 0}
