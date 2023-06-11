@@ -14,6 +14,6 @@ public class videoPlayer : MonoBehaviour
     void CheckOver(UnityEngine.Video.VideoPlayer vp)
     {
         //비디오끝나면 엔딩씬 출력
-        SceneManager.LoadScene("EndScene");
+        GameManager.Instance.LoadNextStage();
     }
 }

@@ -69,7 +69,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             yield return null;
         }
         Debug.Log("아");
-        SceneManager.LoadScene("StartStory");
+        GameManager.Instance.LoadNextStage();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
