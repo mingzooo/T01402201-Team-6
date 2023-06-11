@@ -23,21 +23,20 @@ public class GameManager : MonoBehaviour
     }
   }
   [SerializeField]
-  private int playerHp;
+  public int playerHp;
 
   // 스테이지 씬 이름 배열    
   [SerializeField]
   private string[] sceneNames;
   // 각 스테이지 별 적의 수
-  private int[] stageEnemyCounts = { 1, 25, 30 };
-
-  // 현재 스테이지 인덱스
-  private int currentStageIndex = 0;
+  private int[] stageEnemyCounts = {0, 0, 0, 0, 0, 0, 0, 0 };
+    [SerializeField]
+    private AudioClip[] backgroundMusic;
+    private AudioSource audioSource;
+    // 현재 스테이지 인덱스
+    private int currentStageIndex = 0;
   // 현재 스테이지에서 남은 적의 수
   private int remainingEnemies;
-
-  //목숨 갯수
-  public Image[] life;
 
     public bool Dueling = false;
 
@@ -48,7 +47,8 @@ public class GameManager : MonoBehaviour
     else if (_instance != this) Destroy(gameObject);
     DontDestroyOnLoad(gameObject);
     Init();
-  }
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
 
   public void Init()
   {
@@ -63,7 +63,10 @@ public class GameManager : MonoBehaviour
     }
     if(playerHp <= 0)
         {
-            Invoke("GameOver", 1f);
+            
+            Debug.Log("gameover");
+            GameOver();
+            Init();
         }
   }
 
@@ -77,7 +80,21 @@ public class GameManager : MonoBehaviour
       // 게임 클리어 UI를 표시하거나 게임 종료
       return;
     }
-    remainingEnemies = stageEnemyCounts[currentStageIndex];
+    if(currentStageIndex >= 2 && currentStageIndex <= 4)
+        {
+            audioSource.clip = backgroundMusic[1];
+            audioSource.Play();
+        }
+        else if (currentStageIndex == 5)
+        {
+            audioSource.clip = backgroundMusic[2];
+            audioSource.Play();
+        }
+        else if(currentStageIndex > 5)
+        {
+            audioSource.Stop();
+        }
+            remainingEnemies = stageEnemyCounts[currentStageIndex];
     LoadStage(sceneNames[currentStageIndex]);
   }
 
@@ -88,8 +105,9 @@ public class GameManager : MonoBehaviour
 
   public void TogglePauseGame()
   {
-    // TODO: 게임 일시 정지 로직 구현
-  }
+        // TODO: 게임 일시 정지 로직 구현
+        Init(); LoadNextStage();
+    }
 
 
   public bool CheckAllEnemiesDefeated()
@@ -108,15 +126,16 @@ public class GameManager : MonoBehaviour
   //restart 버튼을 누르면
   public void OnClickRestart()
   {
-    //첫 장면을 가져오게 된다.
-    SceneManager.LoadScene("Stage_1");
-    currentStageIndex = 2;
-  }
+        //첫 장면을 가져오게 된다.
+        Debug.Log("restart");
+        currentStageIndex = 1;
+        LoadNextStage();
+    
+    }
 
   public void SetPlayerHp(int amount)
   {
     playerHp -= amount;
-    UpdateLifeIcon(playerHp);
   }
 
     public void RestartGame()
@@ -130,16 +149,5 @@ public class GameManager : MonoBehaviour
         LoadStage("GameOverScreen");
     }
     
-  public void UpdateLifeIcon(int playerHp)
-  {
-    for (int index = 0; index < 5; index++)
-    {
-      life[index].color = new Color(1, 1, 1, 0);
-    }
-    for (int index = 0; index < playerHp; index++)
-    {
-      life[index].color = new Color(1, 1, 1, 1);
-    }
-  }
 
 }

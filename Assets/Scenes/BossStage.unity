@@ -936,7 +936,7 @@ MonoBehaviour:
   - {fileID: 1036072254}
   - {fileID: 1036072253}
   - {fileID: 1036072252}
-  RetryButton: {fileID: 0}
+  Dueling: 0
 --- !u!4 &1858689148
 Transform:
   m_ObjectHideFlags: 0
