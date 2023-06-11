@@ -55,7 +55,7 @@ public class TypingManager : MonoBehaviour
             //Debug.Log("타이핑 끝");
             if(SceneManager.GetActiveScene().name == "StartStory")
             {
-                SceneManager.LoadScene("Stage_1");
+                GameManager.Instance.LoadNextStage();
             }
         }
         else

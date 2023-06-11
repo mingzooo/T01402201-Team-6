@@ -61,6 +61,10 @@ public class GameManager : MonoBehaviour
     {
       TogglePauseGame();
     }
+    if(playerHp <= 0)
+        {
+            Invoke("GameOver", 1f);
+        }
   }
 
   public void LoadNextStage()
@@ -121,7 +125,11 @@ public class GameManager : MonoBehaviour
         LoadStage(sceneNames[currentStageIndex]);
     }
 
-
+    public void GameOver()
+    {
+        LoadStage("GameOverScreen");
+    }
+    
   public void UpdateLifeIcon(int playerHp)
   {
     for (int index = 0; index < 5; index++)
