@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
-using UnityEditor.SearchService;
 
 public class TypingManager : MonoBehaviour
 {

@@ -137,12 +137,14 @@ public class BossController : MonoBehaviour
             if (!facingRight)
                 Flip();
             facingRight = true;
+            bossAnim.SetBool("Running", false);
         }
         else if (playerTransform.position.x < transform.position.x)
         {
             if (facingRight)
                 Flip();
             facingRight = false;
+            bossAnim.SetBool("Running", false);
         }
         else
         {

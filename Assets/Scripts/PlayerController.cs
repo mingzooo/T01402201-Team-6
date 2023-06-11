@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z) && !isRolling && shootCurCd <= 0f && !GameManager.Instance.Dueling)
         {
+            Debug.Log("shoot");
             shootCurCd = shootCd;
             GameObject bullet = ObjectPooling.GetObject();
             float dir = 1f;

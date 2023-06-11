@@ -46,7 +46,7 @@ public class BulletController : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.x > 300f || transform.position.x < -100f) DestroyBullet();
+        if (transform.position.x > 500f || transform.position.x < -100f) DestroyBullet();
     }
 
     void FixedUpdate()
@@ -60,6 +60,7 @@ public class BulletController : MonoBehaviour
     }
     private void Damage(GameObject attacker, GameObject target, int damage)
     {
+        if (attacker == null) return;
         if (attacker.tag == "Enemy" || attacker.tag == "Boss")
         {
             if (target.tag == "Player" && !target.GetComponent<PlayerController>().CheckRoll())
