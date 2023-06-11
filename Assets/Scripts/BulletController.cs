@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    // AudioSource ÄÄÆ÷³ÍÆ®¸¦ ÀúÀåÇÒ º¯¼ö
+    // AudioSource ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private AudioSource audioSource;
 
     [SerializeField]
@@ -18,7 +18,7 @@ public class BulletController : MonoBehaviour
     private void Awake()
     {
         bulletRb = GetComponent<Rigidbody2D>();
-        // AudioSource ÄÄÆ÷³ÍÆ® ÃßÃâ, º¯¼ö ÇÒ´ç
+        // AudioSource ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½
         audioSource = GetComponent<AudioSource>();
     }
 
