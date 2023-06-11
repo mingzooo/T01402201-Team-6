@@ -47,7 +47,10 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
@@ -175,14 +178,6 @@ public class EnemyController : MonoBehaviour
         else
         {
             return false;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(enemyHealth <= 0)
-        {
-            Destroy(gameObject);
         }
     }
 }
