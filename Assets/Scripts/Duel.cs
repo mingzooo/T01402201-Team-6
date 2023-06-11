@@ -147,7 +147,7 @@ public class Duel : MonoBehaviour
     {
         //UI�� �Է��ؾ��ϴ� �ڵ�� �ð� ������
         Debug.Log(code);
-        keyText.text = "PRESS " + code.ToString();
+        keyText.text = code.ToString();
         if(Input.anyKeyDown)
         {
             if(Input.GetKeyDown(code))
