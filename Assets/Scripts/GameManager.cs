@@ -38,8 +38,6 @@ public class GameManager : MonoBehaviour
 
   //목숨 갯수
   public Image[] life;
-  //재시작버튼
-  public GameObject RetryButton;
 
     public bool Dueling = false;
 
@@ -82,7 +80,6 @@ public class GameManager : MonoBehaviour
   private void LoadStage(string sceneName)
   {
     SceneManager.LoadScene(sceneName);
-
   }
 
   public void TogglePauseGame()
