@@ -20,7 +20,7 @@
 구르기, 회피, 이동 등 존윅 캐릭터에 맞게 구현하였으며 도트 이미지를 통해 게임의 이미지를 극대화시켰습니다.  
 
 **주인공**
-
+<img src="[이미지주소.png](https://github.com/mingzooo/T01402201-Team-6/assets/62490238/e88a650e-5169-4f2a-9758-c9c81b7013f3)" width="200" height="400"/>
 ![IMG_2845](https://github.com/mingzooo/T01402201-Team-6/assets/62490238/e88a650e-5169-4f2a-9758-c9c81b7013f3)
 
 ![IMG_2861](https://github.com/mingzooo/T01402201-Team-6/assets/62490238/be9594e3-e397-4959-9645-9e4200f96528)
